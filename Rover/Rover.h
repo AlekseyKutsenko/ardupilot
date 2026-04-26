@@ -277,6 +277,7 @@ private:
 #endif // AP_SCRIPTING_ENABLED
     void ahrs_update();
     void gcs_failsafe_check(void);
+    void chassis_can_failsafe_check(void);
     void update_logging1(void);
     void update_logging2(void);
     void one_second_loop(void);

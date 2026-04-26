@@ -146,6 +146,12 @@ const AP_Param::GroupInfo AP_Vehicle::var_info[] = {
     AP_SUBGROUPINFO(kdecan, "KDE_",  19, AP_Vehicle, AP_KDECAN),
 #endif
 
+#if AP_CHASSISCAN_ENABLED
+    // @Group: CHCAN_
+    // @Path: ../AP_ChassisCAN/AP_ChassisCAN.cpp
+    AP_SUBGROUPINFO(chassis_can, "CHCAN_", 20, AP_Vehicle, AP_ChassisCAN),
+#endif
+
 #if APM_BUILD_COPTER_OR_HELI || APM_BUILD_TYPE(APM_BUILD_ArduPlane) || APM_BUILD_TYPE(APM_BUILD_Rover)
     // @Param: FLTMODE_GCSBLOCK
     // @DisplayName: Flight mode block from GCS
@@ -501,6 +507,10 @@ void AP_Vehicle::setup()
 
 #if AP_KDECAN_ENABLED
     kdecan.init();
+#endif
+
+#if AP_CHASSISCAN_ENABLED
+    chassis_can.init();
 #endif
 
 #if AP_AIS_ENABLED

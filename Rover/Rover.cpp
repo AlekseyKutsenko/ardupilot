@@ -111,6 +111,7 @@ const AP_Scheduler::Task Rover::scheduler_tasks[] = {
     SCHED_TASK_CLASS(AP_Camera,           &rover.camera,           update,         50,  200,  78),
 #endif
     SCHED_TASK(gcs_failsafe_check,     10,    200,  81),
+    SCHED_TASK(chassis_can_failsafe_check, 10, 200, 82),
 #if AP_FENCE_ENABLED
     SCHED_TASK(fence_check,            10,    200,  84),
 #endif
@@ -364,6 +365,15 @@ void Rover::gcs_failsafe_check(void)
     const bool do_failsafe = last_gcs_update_ms >= gcs_timeout_ms ? true : false;
 
     failsafe_trigger(FAILSAFE_EVENT_GCS, "GCS", do_failsafe);
+}
+
+void Rover::chassis_can_failsafe_check(void)
+{
+#if AP_CHASSISCAN_ENABLED
+    AP_ChassisCAN *chassis_can = AP::chassis_can();
+    const bool do_failsafe = (chassis_can != nullptr) && chassis_can->failsafe_triggered();
+    failsafe_trigger(FAILSAFE_EVENT_CHCAN, "CHCAN", do_failsafe);
+#endif
 }
 
 #if HAL_LOGGING_ENABLED
