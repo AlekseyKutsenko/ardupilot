@@ -69,6 +69,7 @@
 #include <AP_CheckFirmware/AP_CheckFirmware.h>
 #include <Filter/LowPassFilter.h>
 #include <AP_KDECAN/AP_KDECAN.h>
+#include <AP_ChassisCAN/AP_ChassisCAN.h>
 #include <Filter/AP_Filter.h>
 #include <AP_Stats/AP_Stats.h>              // statistics library
 #include <AP_DDS/AP_DDS_config.h>
@@ -476,6 +477,10 @@ protected:
 
 #if AP_KDECAN_ENABLED
     AP_KDECAN kdecan;
+#endif
+
+#if AP_CHASSISCAN_ENABLED
+    AP_ChassisCAN chassis_can;
 #endif
 
 #if AP_FENCE_ENABLED

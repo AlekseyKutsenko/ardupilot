@@ -1,0 +1,7 @@
+#pragma once
+
+#include <AP_HAL/AP_HAL_Boards.h>
+
+#ifndef AP_CHASSISCAN_ENABLED
+#define AP_CHASSISCAN_ENABLED (HAL_CANMANAGER_ENABLED && HAL_PROGRAM_SIZE_LIMIT_KB > 1024)
+#endif

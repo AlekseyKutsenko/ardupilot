@@ -68,6 +68,7 @@
 
   #include <AP_PiccoloCAN/AP_PiccoloCAN.h>
   #include <AP_DroneCAN/AP_DroneCAN.h>
+  #include <AP_ChassisCAN/AP_ChassisCAN.h>
 #endif
 
 #include <AP_Logger/AP_Logger.h>
@@ -1330,6 +1331,20 @@ bool AP_Arming::can_checks(bool report)
                         check_failed(Check::SYSTEM, report, "DroneCAN: %s", fail_msg);
                         return false;
                     }
+#endif
+                    break;
+                }
+                case AP_CAN::Protocol::ChassisCAN:
+                {
+#if AP_CHASSISCAN_ENABLED
+                    AP_ChassisCAN *chassis_can = AP::chassis_can();
+                    if (chassis_can != nullptr && !chassis_can->pre_arm_check(fail_msg, ARRAY_SIZE(fail_msg))) {
+                        check_failed(Check::SYSTEM, report, "%s", fail_msg);
+                        return false;
+                    }
+#else
+                    check_failed(Check::SYSTEM, report, "ChassisCAN not enabled");
+                    return false;
 #endif
                     break;
                 }
